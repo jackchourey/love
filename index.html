@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Popup Example</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        #popup, #abhishekPopup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background-color: white;
+            border: 1px solid black;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+        #congratsMessage {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 255, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 24px;
+            color: white;
+            display: none;
+            z-index: 1000;
+            animation: fadeInOut 3s;
+        }
+        @keyframes fadeInOut {
+            0% { opacity: 0; }
+            50% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+    </style>
+    <script>
+        function showPopup() {
+            // Create a new div element for the popup
+            const popup = document.createElement('div');
+            popup.id = 'popup';
+            popup.innerHTML = `
+                <p>Do you want to talk?</p>
+                <button class="btn btn-primary" onclick="handleWillTalk()">Will Talk</button>
+                <button class="btn btn-secondary" onclick="handleIgnore()">Ignore</button>
+            `;
+
+            // Append the popup to the body
+            document.body.appendChild(popup);
+        }
+
+        function handleWillTalk() {
+            const popup = document.getElementById('popup');
+            if (popup) {
+                document.body.removeChild(popup);
+            }
+
+            // Show congratulations message
+            const congratsMessage = document.getElementById('congratsMessage');
+            congratsMessage.style.display = 'block';
+
+            // Hide congratulations message after animation ends
+            setTimeout(() => {
+                congratsMessage.style.display = 'none';
+                showAbhishekPopup();
+            }, 3000); // 3 seconds for the fadeInOut animation
+        }
+
+        function showAbhishekPopup() {
+            // Create a new popup with the name "Abhishek"
+            const abhishekPopup = document.createElement('div');
+            abhishekPopup.id = 'abhishekPopup';
+            abhishekPopup.innerHTML = `
+                <p>Hello Shivani,<br>You must be made of copper and tellurium, because you're Cu-Te 😁.</p>
+                <button class="btn btn-primary" onclick="closePopup('abhishekPopup')">Let's Talk ;-)</button>
+            `;
+
+            // Append the Abhishek popup to the body
+            document.body.appendChild(abhishekPopup);
+        }
+
+        function handleIgnore() {
+            const popup = document.getElementById('popup');
+            if (popup) {
+                document.body.removeChild(popup);
+            }
+            setTimeout(showPopup, 100); // Show the popup again after 1 second
+        }
+
+        function closePopup(id) {
+            const popup = document.getElementById(id);
+            if (popup) {
+                document.body.removeChild(popup);
+            }
+        }
+
+        window.onload = function() {
+            showPopup();
+        };
+    </script>
+</head>
+<body>
+    <div id="congratsMessage">Congratulations!</div>
+</body>
+</html>
